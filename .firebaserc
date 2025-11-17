@@ -1,0 +1,13 @@
+{
+  "projects": {
+    "default": "book-stall-reservation"
+  },
+  "targets": {
+    "book-stall-reservation": {
+      "hosting": {
+        "publisher": ["publisher-portal"],
+        "organizer": ["organizer-portal-bookfair"]
+      }
+    }
+  }
+}
