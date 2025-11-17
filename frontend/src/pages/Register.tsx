@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import RegisterImage from "../assets/RegisterImage.svg";
 import Facebook from "../assets/Facebook.svg";
 import Google from "../assets/Google.svg";
 import Apple from "../assets/Apple.svg";
+import API from "../api";
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -31,8 +32,8 @@ const Register: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+      const response = await API.post(
+        "/auth/register",
         formData
       );
       setMessage("✅ " + response.data.message);

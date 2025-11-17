@@ -32,7 +32,9 @@ const app = express();
 // ✅ Use CORS properly
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174", "https://publisher-portal.web.app"], // Add your Cloud Run URL later, e.g., https://backend-xyz.a.run.app
+    origin: ["http://localhost:5173", "http://localhost:5174", 
+      "https://publisher-portal.web.app",
+      "https://organizer-portal-bookfair.web.app", "https://book-stall-reservation.web.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
