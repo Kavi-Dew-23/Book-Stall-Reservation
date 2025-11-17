@@ -779,9 +779,10 @@
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
-import axios from "axios";
+// import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ArrowRightOnRectangleIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import API from "../api";
 
 interface STALL {
   id: string;
@@ -846,7 +847,7 @@ const StallMap: React.FC = () => {
   // -------- FETCH RESERVED STALLS --------
   const fetchReservedStalls = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/reservations/stalls", {
+      const res = await API.get("/reservations/stalls", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -926,8 +927,8 @@ const StallMap: React.FC = () => {
     try {
       setIsLoading(true);
 
-      await axios.post(
-        "http://localhost:5000/api/reservations/reserve",
+      await API.post(
+        "/reservations/reserve",
         {
           reservationId: Date.now().toString(),
           email: publisherEmail,

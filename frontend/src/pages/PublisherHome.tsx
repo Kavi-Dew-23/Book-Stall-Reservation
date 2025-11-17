@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ import {
   ReceiptPercentIcon,
   ArrowDownIcon,
 } from "@heroicons/react/24/outline";
+import API from "../api";
 
 interface Reservation {
   id: string;
@@ -64,9 +65,8 @@ const PublisherHome: React.FC = () => {
   /** Fetch reservations for this publisher */
   const fetchReservations = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:5000/api/reservations/user/${publisherEmail}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+      const res = await API.get(
+        `/reservations/user/${publisherEmail}`
       );
       if (Array.isArray(res.data)) setReservations(res.data);
     } catch (err) {
@@ -78,8 +78,8 @@ const PublisherHome: React.FC = () => {
   /** Fetch genres */
   const fetchGenres = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:5000/api/publishers/${publisherEmail}`,
+      const res = await API.get(
+        `/publishers/${publisherEmail}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const fetched = res.data.genres || [];
@@ -96,8 +96,8 @@ const PublisherHome: React.FC = () => {
   /** Save genres to Firestore */
   const saveGenres = async (updated: string[]) => {
     try {
-      await axios.post(
-        "http://localhost:5000/api/publishers/update-genres",
+      await API.post(
+        "/publishers/update-genres",
         {
           email: publisherEmail,
           name: publisherName,
@@ -151,13 +151,13 @@ const PublisherHome: React.FC = () => {
             Reserve Stalls
           </button>
 
-         <button
-    onClick={() => setShowLogoutModal(true)}
-    className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py- rounded-xl shadow-md transition flex items-center gap-2"
-  >
-    <ArrowRightOnRectangleIcon className="h-5 w-5 text-white" />
-    Logout
-  </button>
+          <button
+            onClick={() => setShowLogoutModal(true)}
+            className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py- rounded-xl shadow-md transition flex items-center gap-2"
+          >
+            <ArrowRightOnRectangleIcon className="h-5 w-5 text-white" />
+            Logout
+          </button>
         </div>
       </div>
 
@@ -196,13 +196,13 @@ const PublisherHome: React.FC = () => {
               >
                 {genre}
                 <button
-  onClick={() => handleDeleteGenre(genre)}
-  title={`Remove ${genre}`}
-  aria-label={`Remove ${genre}`}
-  className="text-red-500 hover:text-red-700 p-1 rounded hover:bg-red-100"
->
-  <XMarkIcon className="h-4 w-4" aria-hidden="true" />
-</button>
+                  onClick={() => handleDeleteGenre(genre)}
+                  title={`Remove ${genre}`}
+                  aria-label={`Remove ${genre}`}
+                  className="text-red-500 hover:text-red-700 p-1 rounded hover:bg-red-100"
+                >
+                  <XMarkIcon className="h-4 w-4" aria-hidden="true" />
+                </button>
 
               </li>
             ))}
