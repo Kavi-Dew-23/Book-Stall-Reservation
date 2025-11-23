@@ -25,16 +25,3 @@ API.interceptors.request.use(
 );
 
 export default API;
-
-
-// // 1st version
-
-// import axios from "axios";
-
-// const API = axios.create({
-//   baseURL: "http://localhost:5000/api", // backend API base URL
-// });
-
-// export default API;
-
-

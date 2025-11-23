@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import axios from "axios";
 import RegisterImage from "../assets/RegisterImage.svg";
 import Facebook from "../assets/Facebook.svg";
 import Google from "../assets/Google.svg";

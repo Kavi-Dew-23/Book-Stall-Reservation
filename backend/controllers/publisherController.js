@@ -2,7 +2,7 @@
 import admin from "firebase-admin";
 
 /**
- * ✅ Get publisher profile (with genres)
+ *  Get publisher profile (with genres)
  */
 export const getPublisherProfile = async (req, res) => {
   try {
@@ -30,7 +30,7 @@ export const getPublisherProfile = async (req, res) => {
 };
 
 /**
- * ✅ Create or update publisher genres
+ * Create or update publisher genres
  */
 export const updatePublisherGenres = async (req, res) => {
   try {

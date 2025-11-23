@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import LoginImage from "../assets/Login.svg";
 import Google from "../assets/Google.svg";
-// import axios from "axios";
 import API from "../api";
 
 const Login: React.FC = () => {
