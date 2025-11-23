@@ -4,6 +4,7 @@ import Facebook from "../assets/Facebook.svg";
 import Google from "../assets/Google.svg";
 import Apple from "../assets/Apple.svg";
 import API from "../api";
+import BookImage from "../assets/BookIcon.svg";
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -56,6 +57,7 @@ const Register: React.FC = () => {
     <div className="flex w-full bg-[#fff2cc]">
       {/* Left section */}
       <div className="hidden lg:block lg:w-1/2 relative h-screen">
+        
         <img
           src={RegisterImage}
           alt="Register Image"
@@ -64,8 +66,11 @@ const Register: React.FC = () => {
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/30"></div>
         <div>
-          <div className="absolute inset-0 flex items-center justify-left ml-14">
-            <div className="text-center max-w-lg ">
+          <div className="absolute inset-0 flex items-center justify-center ml-14">
+            <div className="text-center max-w-lg">
+              <div className="flex flex-col items-center">
+              <img src={BookImage} alt="Book Image" className="w-25 h-25 invert"/>
+              </div>
             <h1 className="text-white text-5xl mb-4 font-bold ">Colombo International Book Fair</h1>
             <p className="text-white text-xl">Join thousands of book lovers and discover the world of literature</p>
             </div>
