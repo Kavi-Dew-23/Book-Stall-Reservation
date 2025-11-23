@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import LoginImage from "../assets/Login.svg";
 import Google from "../assets/Google.svg";
-import axios from "axios";
+// import axios from "axios";
+import API from "../api";
 
 const Login: React.FC = () => {
     const [formData, setFormData] = useState({email: "", password: ""});
@@ -19,7 +20,7 @@ const Login: React.FC = () => {
 
         try{
             //login and get token
-            const res = await axios.post("http://localhost:5000/api/auth/login",formData);
+            const res = await API.post("/auth/login", formData);
             const {token, role} = res.data;
     
             localStorage.setItem("token", token);
@@ -31,16 +32,12 @@ const Login: React.FC = () => {
 
             
             if(role === "publisher") {
-                window.location.href = "/publisher";
+                window.location.href = "/publisher/home";
             } else if(role === "organizer") {
                 window.location.href = "/organizer";
             }
             // test of token works
-            const test = await axios.get("http://localhost:5000/api/auth/protected", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            const test = await API.get("/auth/protected");
             console.log("Protected route response", test.data);
         } catch (err: any) {
             console.error(err);

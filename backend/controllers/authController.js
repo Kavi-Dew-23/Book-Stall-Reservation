@@ -1,5 +1,5 @@
 import admin from "firebase-admin";
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
 import { signToken} from "../utils/jwt.js";
 
 export const registerUser = async (req, res) => {
@@ -56,60 +56,68 @@ export const registerUser = async (req, res) => {
 };  
 
 // ---Login User-----
-export const loginUser = async (req,res) => {
-    try{
-        const {email, password} = req.body;
+// ---Login User-----
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-        if (!email || !password) {
-            return res.status(400).json({message: "Email and Password are required"});
-        }
-
-        // verify firebase credentials via REST API
-        const apiKey = process.env.FIREBASE_API_KEY;
-
-        const response = await fetch(
-            `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`,
-            {
-              method: "POST",
-              headers: {"Content-type": "application/json"},
-              body: JSON.stringify({email, password, returnSecureToken: true}),
-            }
-        );
-
-        const data = await response.json();
-
-        if(!response.ok) {
-          return res.status(400).json({message: data.error.message});
-        }
-
-        // Get users role from the firestore
-        const userRef = admin.firestore().collection("users").where("email", "==", email).limit(1);
-        const snapshot = await userRef.get();
-
-        if(snapshot.empty) {
-          return res.status(400).json({message: "User not found in the database"});
-        }
-
-        const doc = snapshot.docs[0];
-        const userData = doc.data();
-        const role = userData.role || "publisher";
-        const uid = doc.id;
-
-        //Create JWT token
-        const token = signToken({
-          uid,
-          email,
-          role
-        }, "4h" );
-
-        res.status(200).json({
-          message: "Login Successful",
-          token,
-          role,
-          email,
-        });
-    } catch (error) {
-      console.error(" Login Failed: ", error);
-      res.status(500).json({message: "Login failed", error: error.message});
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and Password are required" });
     }
+
+    // Verify Firebase credentials
+    const apiKey = process.env.FIREBASE_API_KEY;
+    const response = await fetch(
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ email, password, returnSecureToken: true }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return res.status(400).json({ message: data.error.message });
+    }
+
+    // 🔹 Get user's role & name from Firestore
+    const userRef = admin.firestore().collection("users").where("email", "==", email).limit(1);
+    const snapshot = await userRef.get();
+
+    if (snapshot.empty) {
+      return res.status(400).json({ message: "User not found in the database" });
+    }
+
+    const doc = snapshot.docs[0];
+    const userData = doc.data();
+    const role = userData.role || "publisher";
+    const uid = doc.id;
+    const fullName = `${userData.firstName || ""} ${userData.lastName || ""}`.trim();
+
+    // 🔹 Create JWT token with publisher name
+    const token = signToken(
+      {
+        uid,
+        email,
+        name: fullName || "Publisher",
+        role,
+      },
+      "4h"
+    );
+
+    // ✅ Send full details back to frontend
+    res.status(200).json({
+      message: "Login Successful",
+      token,
+      role,
+      email,
+      name: fullName,
+    });
+
+  } catch (error) {
+    console.error("❌ Login Failed:", error);
+    res.status(500).json({ message: "Login failed", error: error.message });
+  }
 };

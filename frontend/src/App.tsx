@@ -1,9 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import PublisherDashboard from './pages/PublisherDashboard';
+// import PublisherDashboard from './pages/PublisherDashboard';
 import OrganizerDashboard from './pages/OrganizerDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import StallMap from './pages/StallMap';
+import PublisherHome from './pages/PublisherHome';
 
 function App() {
   return (
@@ -11,9 +14,15 @@ function App() {
       <Routes>
         <Route path="/"
         element={
-            <Register/>
+            <LandingPage/>
         }>
         
+        </Route>
+        <Route 
+        path="/register"
+        element={
+          <Register/>
+        }>
         </Route>
         <Route 
         path="/login"
@@ -21,13 +30,35 @@ function App() {
           <Login/>
         }>
         </Route>
+        <Route 
+        path="/stallmap"
+        element={
+          <StallMap/>
+        }>
+        </Route>
 
         {/* Protected routes */}
-        <Route
+        {/* <Route
           path="/publisher"
           element={
             <ProtectedRoute allowedRoles={["publisher"]}>
               <PublisherDashboard />
+            </ProtectedRoute>
+          }
+        /> */}
+        <Route
+          path="/publisher"
+          element={
+            <ProtectedRoute allowedRoles={["publisher"]}>
+              <StallMap />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/publisher/home"
+          element={
+            <ProtectedRoute allowedRoles={["publisher"]}>
+              <PublisherHome />
             </ProtectedRoute>
           }
         />
@@ -41,8 +72,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        
       </Routes>
     </BrowserRouter>
   )
