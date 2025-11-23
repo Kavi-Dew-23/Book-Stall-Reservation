@@ -80,7 +80,7 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: data.error.message });
     }
 
-    // 🔹 Get user's role & name from Firestore
+    //  Get user's role & name from Firestore
     const userRef = admin.firestore().collection("users").where("email", "==", email).limit(1);
     const snapshot = await userRef.get();
 
@@ -94,7 +94,7 @@ export const loginUser = async (req, res) => {
     const uid = doc.id;
     const fullName = `${userData.firstName || ""} ${userData.lastName || ""}`.trim();
 
-    // 🔹 Create JWT token with publisher name
+    //  Create JWT token with publisher name
     const token = signToken(
       {
         uid,

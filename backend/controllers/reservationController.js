@@ -3,7 +3,7 @@ import { generateAndUploadQR } from "../services/qrService.js";
 import { sendReservationEmail } from "../services/emailService.js";
 
 /**
- * ✅ Get all stalls from Firestore
+ * Get all stalls from Firestore
  * Returns a list of all stalls (reserved or not)
  */
 export const getAllStalls = async (req, res) => {
@@ -31,7 +31,7 @@ export const getAllStalls = async (req, res) => {
 };
 
 /**
- * ✅ Confirm reservation and update Firestore
+ *  Confirm reservation and update Firestore
  * Creates a reservation record, updates stall status, generates QR,
  * uploads it to Firebase Storage, and sends confirmation email.
  */
@@ -48,12 +48,12 @@ export const confirmReservation = async (req, res) => {
 
     const db = admin.firestore();
 
-    // Step 1️⃣: Validate input
+    // Step 1️: Validate input
     if (!email || !stalls || stalls.length === 0) {
       return res.status(400).json({ message: "Invalid reservation data." });
     }
 
-    // ⭐ STEP A — CHECK EXISTING RESERVED STALLS (GLOBAL LIMIT = 3) ⭐
+    //  STEP A — CHECK EXISTING RESERVED STALLS (GLOBAL LIMIT = 3) ⭐
     const existingSnapshot = await db
       .collection("stalls")
       .where("reservedBy", "==", email)
@@ -71,7 +71,7 @@ total would be ${newTotal}.`,
       });
     }
 
-    // Step 2️⃣: Check for already reserved stalls
+    // Step 2️: Check for already reserved stalls
     const alreadyReserved = [];
     for (const stallId of stalls) {
       const stallDoc = await db.collection("stalls").doc(stallId).get();
@@ -88,7 +88,7 @@ total would be ${newTotal}.`,
       });
     }
 
-    // Step 3️⃣: Mark each stall as reserved
+    // Step 3️: Mark each stall as reserved
     await Promise.all(
       stalls.map(async (stallId) => {
         await db
@@ -107,10 +107,10 @@ total would be ${newTotal}.`,
       })
     );
 
-    // Step 4️⃣: Generate QR
+    // Step 4️: Generate QR
     const qrUrl = await generateAndUploadQR(reservationId, email, publisherName);
 
-    // Step 5️⃣: Save reservation
+    // Step 5️: Save reservation
     await db.collection("reservations").doc(reservationId.toString()).set({
       reservationId,
       email,
@@ -120,7 +120,7 @@ total would be ${newTotal}.`,
       createdAt: new Date().toISOString(),
     });
 
-    // Step 6️⃣: Send confirmation email (optional)
+    // Step 6️: Send confirmation email (optional)
     try {
       await sendReservationEmail(
         email,
@@ -134,7 +134,7 @@ total would be ${newTotal}.`,
 
     console.log("✅ Reservation successful for:", email);
 
-    // Step 7️⃣: Respond
+    // Step 7️: Respond
     res.status(200).json({
       message: "Reservation confirmed successfully!",
       qrUrl,
@@ -150,7 +150,7 @@ total would be ${newTotal}.`,
 
 
 /**
- * ✅ Get all reservations of a specific user (publisher)
+ * Get all reservations of a specific user (publisher)
  */
 export const getUserReservations = async (req, res) => {
   try {
@@ -191,17 +191,6 @@ export const getUserReservations = async (req, res) => {
   }
 };
 
-// --- 🛑 DEPRECATED ---
-// This function is too simple and causes data inconsistency.
-// export const unreserveStall = async (req, res) => { ... };
-
-// -------------------------------------
-// --- ✅ NEW ADMIN FUNCTIONS ---
-// -------------------------------------
-
-/**
- * ✅ Admin: Get ALL reservations
- */
 export const getAllReservations = async (req, res) => {
   try {
     const db = admin.firestore();
@@ -228,7 +217,7 @@ export const getAllReservations = async (req, res) => {
 };
 
 /**
- * ✅ Admin: Cancel an entire reservation
+ *  Admin: Cancel an entire reservation
  * (Used by the Reservations Page)
  */
 export const adminCancelReservation = async (req, res) => {
@@ -256,7 +245,7 @@ export const adminCancelReservation = async (req, res) => {
           reservedBy: null,
           publisherName: null,
           reservedAt: null,
-          reservationId: null, // ✅ Clear the reservationId
+          reservationId: null, // Clear the reservationId
         })
       )
     );
@@ -271,7 +260,7 @@ export const adminCancelReservation = async (req, res) => {
 };
 
 /**
- * ✅ Admin: Remove a SINGLE stall from a reservation
+ * Admin: Remove a SINGLE stall from a reservation
  * (Used by the Stalls Page)
  */
 export const adminRemoveStall = async (req, res) => {
