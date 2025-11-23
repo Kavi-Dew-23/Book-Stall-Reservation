@@ -1,5 +1,4 @@
 import admin from "firebase-admin";
-// import jwt from "jsonwebtoken";
 import { signToken} from "../utils/jwt.js";
 
 export const registerUser = async (req, res) => {
@@ -56,7 +55,6 @@ export const registerUser = async (req, res) => {
 };  
 
 // ---Login User-----
-// ---Login User-----
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -107,7 +105,7 @@ export const loginUser = async (req, res) => {
       "4h"
     );
 
-    // ✅ Send full details back to frontend
+    // Send full details back to frontend
     res.status(200).json({
       message: "Login Successful",
       token,
