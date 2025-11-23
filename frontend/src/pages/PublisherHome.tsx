@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -54,7 +53,7 @@ const PublisherHome: React.FC = () => {
     }
   }
 
-  // 🔹 Fetch reservations + genres
+  // Fetch reservations + genres
   useEffect(() => {
     if (publisherEmail) {
       fetchReservations();
@@ -84,7 +83,7 @@ const PublisherHome: React.FC = () => {
       );
       const fetched = res.data.genres || [];
       setGenres(fetched);
-      // 👇 Auto-prompt modal if first time / empty
+      //  Auto-prompt modal if first time / empty
       if (fetched.length === 0) {
         setTimeout(() => setShowGenreModal(true), 500);
       }
@@ -282,7 +281,7 @@ const PublisherHome: React.FC = () => {
         )}
       </div>
 
-      {/* 📍 Modal: Add Genres (Blurred Background) */}
+      {/* Modal: Add Genres (Blurred Background) */}
       {showGenreModal && (
         <div className="fixed inset-0 backdrop-blur-sm bg-white/40 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-2xl shadow-2xl max-w-md w-full text-center border border-yellow-400">
@@ -320,7 +319,7 @@ const PublisherHome: React.FC = () => {
         </div>
       )}
 
-      {/* 📍 Logout Confirmation Popup */}
+      {/*  Logout Confirmation Popup */}
       {showLogoutModal && (
         <div className="fixed inset-0 backdrop-blur-sm bg-white/40 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-2xl shadow-2xl max-w-sm w-full text-center border border-red-400">

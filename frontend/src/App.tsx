@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import Register from './pages/Register';
 import Login from './pages/Login';
-// import PublisherDashboard from './pages/PublisherDashboard';
 import OrganizerDashboard from './pages/OrganizerDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import StallMap from './pages/StallMap';
@@ -36,16 +35,7 @@ function App() {
           <StallMap/>
         }>
         </Route>
-
-        {/* Protected routes */}
-        {/* <Route
-          path="/publisher"
-          element={
-            <ProtectedRoute allowedRoles={["publisher"]}>
-              <PublisherDashboard />
-            </ProtectedRoute>
-          }
-        /> */}
+        
         <Route
           path="/publisher"
           element={
