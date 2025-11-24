@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import RegisterImage from "../assets/RegisterImage.svg";
+import RegisterImage from "../assets/Register.svg";
 import Facebook from "../assets/Facebook.svg";
 import Google from "../assets/Google.svg";
 import Apple from "../assets/Apple.svg";
 import API from "../api";
+import BookImage from "../assets/BookIcon.svg";
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -53,26 +54,36 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen w-full">
+    <div className="flex w-full bg-[#fff2cc]">
       {/* Left section */}
-      <div className="w-1/3 flex items-center justify-center">
+      <div className="hidden lg:block lg:w-1/2 relative h-screen">
+        
         <img
           src={RegisterImage}
           alt="Register Image"
-          className="max-w-full h-auto object-contain"
+          className="w-full h-full object-cover"
         />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/30"></div>
+        <div>
+          <div className="absolute inset-0 flex items-center justify-center ml-14">
+            <div className="text-center max-w-lg">
+              <div className="flex flex-col items-center">
+              <img src={BookImage} alt="Book Image" className="w-25 h-25 invert"/>
+              </div>
+            <h1 className="text-white text-5xl mb-4 font-bold ">Colombo International Book Fair</h1>
+            <p className="text-white text-xl">Join thousands of book lovers and discover the world of literature</p>
+            </div>
+            
+          </div>
+        </div>
       </div>
 
       {/* Right section */}
-      <div className="w-2/3 flex flex-col justify-center items-center px-10">
-        <h1 className="text-3xl font-bold text-yellow-600 mb-2 text-center">
-          Welcome to Colombo International Book Fair
-        </h1>
-        <p className="text-sm text-gray-300 mb-2">
-          Let’s get you set up so you can access your personal account.
-        </p>
-        <h2 className="text-2xl font-bold text-amber-500 mb-6">
-          Sign Up your Account
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center px-10">
+       
+        <h2 className="text-4xl font-bold text-[#e6ac00] mb-8 items-center">
+          Create your Account
         </h2>
 
         {message && (
@@ -93,7 +104,7 @@ const Register: React.FC = () => {
               placeholder="First Name"
               value={formData.firstName}
               onChange={handleChange}
-              className="p-3 rounded bg-amber-200 text-gray-900 placeholder-gray-700 focus:outline-none"
+              className="p-3 rounded-xl bg-[#ffe699] text-gray-900 placeholder-gray-700 focus:outline-none"
               required
             />
             <input
@@ -102,7 +113,7 @@ const Register: React.FC = () => {
               placeholder="Last Name"
               value={formData.lastName}
               onChange={handleChange}
-              className="p-3 rounded bg-amber-200 text-gray-900 placeholder-gray-700 focus:outline-none"
+              className="p-3 rounded-xl bg-[#ffe699] text-gray-900 placeholder-gray-700 focus:outline-none"
               required
             />
           </div>
@@ -114,7 +125,7 @@ const Register: React.FC = () => {
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
-              className="p-3 rounded bg-amber-200 text-gray-900 placeholder-gray-700 focus:outline-none"
+              className="p-3 rounded-xl bg-[#ffe699] text-gray-900 placeholder-gray-700 focus:outline-none"
               required
             />
             <input
@@ -123,7 +134,7 @@ const Register: React.FC = () => {
               placeholder="Phone Number"
               value={formData.phoneNumber}
               onChange={handleChange}
-              className="p-3 rounded bg-amber-200 text-gray-900 placeholder-gray-700 focus:outline-none"
+              className="p-3 rounded-xl bg-[#ffe699] text-gray-900 placeholder-gray-700 focus:outline-none"
               required
             />
           </div>
@@ -133,7 +144,7 @@ const Register: React.FC = () => {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full p-3 rounded bg-amber-200 text-gray-900 placeholder-gray-700 focus:outline-none mb-8"
+            className="w-full p-3 rounded-xl bg-[#ffe699] text-gray-900 placeholder-gray-700 focus:outline-none mb-8"
             required
           />
 
@@ -143,26 +154,26 @@ const Register: React.FC = () => {
             placeholder="Confirm Password"
             value={formData.confirmPassword}
             onChange={handleChange}
-            className="w-full p-3 rounded bg-amber-200 text-gray-900 placeholder-gray-700 focus:outline-none mb-8"
+            className="w-full p-3 rounded-xl bg-[#ffe699] text-gray-900 placeholder-gray-700 focus:outline-none mb-8"
             required
           />
 
-          <label className="flex text-sm space-x-2 text-gray-300">
+          <label className="flex text-sm space-x-2 text-gray-600">
             <input type="checkbox" name="agree" required />
             <span>I agree to all the Terms and Privacy Policies</span>
           </label>
 
           <button
             type="submit"
-            className="w-full bg-yellow-600 hover:bg-yellow-700 rounded-xl mt-4 p-3"
+            className="w-full bg-yellow-600 hover:bg-yellow-700 rounded-xl mt-4 p-3 font-bold text-m"
           >
             Create Account
           </button>
 
-          <div className="text-center mt-5 text-gray-300">
+          <div className="text-center mt-5 text-gray-700">
             <p>
               Already have an Account?{" "}
-              <a href="/login" className="text-amber-300 hover:underline">
+              <a href="/login" className="text-[#806000] hover:underline">
                 Login
               </a>
             </p>
@@ -172,7 +183,7 @@ const Register: React.FC = () => {
                 <button
                   key={index}
                   type="button"
-                  className="bg-amber-100 p-3 rounded-lg cursor-pointer w-lg flex justify-center items-center hover:bg-amber-200"
+                  className="bg-[#ffd966] p-3 rounded-lg cursor-pointer w-lg flex justify-center items-center hover:bg-[#cc9900]"
                 >
                   <img
                     src={icon}
