@@ -117,7 +117,7 @@ const PublisherHome: React.FC = () => {
     const updated = [...new Set([...genres, newGenre.trim()])];
     saveGenres(updated);
     setNewGenre("");
-    setShowGenreModal(false); // Close modal if user adds genres
+    setShowGenreModal(false); 
   };
 
   const handleDeleteGenre = (genre: string) => {

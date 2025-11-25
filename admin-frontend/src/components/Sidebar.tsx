@@ -1,9 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { LayoutDashboard, CalendarCheck, CheckSquare } from "lucide-react";
 
-// You can find your react.svg in assets
-// import logo from "../assets/react.svg"; 
-
 export default function Sidebar() {
   const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
     `flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
@@ -15,7 +12,6 @@ export default function Sidebar() {
   return (
     <aside className="w-64 bg-white border-r border-gray-200 flex flex-col">
       <div className="h-16 flex items-center justify-center border-b">
-        {/* <img src={logo} alt="Logo" className="h-8 w-auto" /> */}
         <span className="text-2xl font-bold text-blue-600">Admin Portal</span>
       </div>
       <nav className="flex-1 p-4 space-y-2">
