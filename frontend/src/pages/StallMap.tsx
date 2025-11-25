@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { ArrowRightOnRectangleIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import API from "../api";
+import { IoCheckmarkCircleSharp } from "react-icons/io5";
 
 interface STALL {
   id: string;
@@ -239,7 +240,8 @@ const StallMap: React.FC = () => {
       <div className="fixed inset-0 bg-gray-100 flex items-center justify-center z-50">
         <div className="bg-white p-8 rounded-lg shadow-2xl text-center border border-yellow-500">
           <div className="w-16 h-16 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <h2 className="text-xl font-bold mb-2">Reservation Confirmed! 🎉</h2>
+          <h2 className="text-xl font-bold mb-2">Reservation Confirmed!</h2>
+          <IoCheckmarkCircleSharp className="text-green-600 text-4xl mx-auto mb-4" />
           <p>Redirecting...</p>
         </div>
       </div>
@@ -392,7 +394,6 @@ const StallMap: React.FC = () => {
         <div className="fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-xl shadow-2xl max-w-md w-full">
             <h2 className="text-xl font-bold mb-3">Confirm Reservation</h2>
-
             <ul className="mb-4 list-disc pl-5">
               {selected.map((id) => (
                 <li key={id}>{id}</li>

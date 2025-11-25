@@ -30,11 +30,6 @@ export const getAllStalls = async (req, res) => {
   }
 };
 
-/**
- *  Confirm reservation and update Firestore
- * Creates a reservation record, updates stall status, generates QR,
- * uploads it to Firebase Storage, and sends confirmation email.
- */
 export const confirmReservation = async (req, res) => {
   try {
     const { reservationId, email, stalls, publisherName } = req.body;
@@ -48,12 +43,12 @@ export const confirmReservation = async (req, res) => {
 
     const db = admin.firestore();
 
-    // Step 1️: Validate input
+    // Validate input
     if (!email || !stalls || stalls.length === 0) {
       return res.status(400).json({ message: "Invalid reservation data." });
     }
 
-    //  STEP A — CHECK EXISTING RESERVED STALLS (GLOBAL LIMIT = 3) ⭐
+    //  Check total reservation limit
     const existingSnapshot = await db
       .collection("stalls")
       .where("reservedBy", "==", email)
@@ -71,7 +66,7 @@ total would be ${newTotal}.`,
       });
     }
 
-    // Step 2️: Check for already reserved stalls
+    // Check for already reserved stalls
     const alreadyReserved = [];
     for (const stallId of stalls) {
       const stallDoc = await db.collection("stalls").doc(stallId).get();
@@ -88,7 +83,7 @@ total would be ${newTotal}.`,
       });
     }
 
-    // Step 3️: Mark each stall as reserved
+    // Mark each stall as reserved
     await Promise.all(
       stalls.map(async (stallId) => {
         await db
@@ -107,10 +102,10 @@ total would be ${newTotal}.`,
       })
     );
 
-    // Step 4️: Generate QR
+    // sGenerate QR
     const qrUrl = await generateAndUploadQR(reservationId, email, publisherName);
 
-    // Step 5️: Save reservation
+    // Save reservation
     await db.collection("reservations").doc(reservationId.toString()).set({
       reservationId,
       email,
@@ -120,7 +115,7 @@ total would be ${newTotal}.`,
       createdAt: new Date().toISOString(),
     });
 
-    // Step 6️: Send confirmation email (optional)
+    // Send confirmation email (optional)
     try {
       await sendReservationEmail(
         email,
@@ -134,7 +129,7 @@ total would be ${newTotal}.`,
 
     console.log("✅ Reservation successful for:", email);
 
-    // Step 7️: Respond
+    // Respond
     res.status(200).json({
       message: "Reservation confirmed successfully!",
       qrUrl,
@@ -148,10 +143,6 @@ total would be ${newTotal}.`,
   }
 };
 
-
-/**
- * Get all reservations of a specific user (publisher)
- */
 export const getUserReservations = async (req, res) => {
   try {
     const { email } = req.params;
@@ -167,7 +158,6 @@ export const getUserReservations = async (req, res) => {
       return res.status(200).json([]);
     }
 
-    // Cleanly map all required fields
     const reservations = snapshot.docs.map((doc) => {
       const data = doc.data();
       return {
@@ -216,10 +206,6 @@ export const getAllReservations = async (req, res) => {
   }
 };
 
-/**
- *  Admin: Cancel an entire reservation
- * (Used by the Reservations Page)
- */
 export const adminCancelReservation = async (req, res) => {
   try {
     const { reservationId } = req.params;
@@ -245,7 +231,7 @@ export const adminCancelReservation = async (req, res) => {
           reservedBy: null,
           publisherName: null,
           reservedAt: null,
-          reservationId: null, // Clear the reservationId
+          reservationId: null,
         })
       )
     );
@@ -259,10 +245,7 @@ export const adminCancelReservation = async (req, res) => {
   }
 };
 
-/**
- * Admin: Remove a SINGLE stall from a reservation
- * (Used by the Stalls Page)
- */
+
 export const adminRemoveStall = async (req, res) => {
   try {
     const { stallId } = req.params;

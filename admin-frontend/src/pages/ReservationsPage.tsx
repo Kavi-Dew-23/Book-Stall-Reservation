@@ -118,7 +118,7 @@ export default function ReservationsPage() {
           />
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
         </div>
-        
+
         <div className="flex gap-4">
           {/* Filter Dropdown (Local Only) */}
           <div className="relative">
@@ -144,7 +144,7 @@ export default function ReservationsPage() {
       </div>
 
       {/* --- Data Table --- */}
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="bg-white rounded-lg shadow-md overflow-visible">
         <table className="w-full min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -228,19 +228,22 @@ export default function ReservationsPage() {
                       {activeActionMenu?.id === res.id && (
                         <div
                           className={`origin-top-right absolute right-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10
-                          ${
-                            activeActionMenu.direction === "up"
-                              ? "bottom-full mb-2"
-                              : "mt-2"
-                          }`}
+                          ${activeActionMenu.direction === "up"
+                              ? "bottom-full mb-1"
+                              : "mt-1"
+                            }`}
                         >
-                          <div className="py-1">
+                          <div className="">
                             <button
                               onClick={() => handleCancelReservation(res.id)}
-                              className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                              className="items-center block w-full px-4 py-2 text-sm 
+             bg-red-50 text-red-600 
+             hover:bg-red-100 hover:text-red-700
+             font-medium transition rounded-md"
                             >
                               Cancel Reservation
                             </button>
+
                           </div>
                         </div>
                       )}
