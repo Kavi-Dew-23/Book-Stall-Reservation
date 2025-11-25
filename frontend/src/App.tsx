@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import OrganizerDashboard from './pages/OrganizerDashboard';
+// import OrganizerDashboard from './pages/OrganizerDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import StallMap from './pages/StallMap';
 import PublisherHome from './pages/PublisherHome';
@@ -49,16 +49,6 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={["publisher"]}>
               <PublisherHome />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Protected routes */}
-        <Route
-          path="/organizer"
-          element={
-            <ProtectedRoute allowedRoles={["organizer"]}>
-              <OrganizerDashboard />
             </ProtectedRoute>
           }
         />

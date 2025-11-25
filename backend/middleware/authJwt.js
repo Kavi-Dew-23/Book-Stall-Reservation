@@ -10,8 +10,8 @@ export const authenticateToken = (req, res, next) => {
     }
     const token = authHeader.split(" ")[1];
 
-    const decoded = verifyToken(token); // will throw if invalid/expired
-    req.user = decoded; // { uid, email, role, ... }
+    const decoded = verifyToken(token); 
+    req.user = decoded;
     next();
   } catch (err) {
     console.error("JWT verify error:", err.message);

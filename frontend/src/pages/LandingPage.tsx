@@ -14,7 +14,7 @@ const LandingPage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50">
+    <div className="min-h-screen bg-linear-to-br from-amber-50 via-yellow-50 to-orange-50">
       {/* Navigation Bar */}
       <nav className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -211,7 +211,7 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-yellow-500 to-orange-500 py-16 mt-16">
+      <section className="bg-linear-to-r from-yellow-500 to-orange-500 py-16 mt-16">
         <div className="max-w-4xl mx-auto text-center px-4">
           <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Ready to Reserve Your Stall?
